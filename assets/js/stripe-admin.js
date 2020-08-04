@@ -105,7 +105,7 @@ jQuery( function( $ ) {
 			if ( woocommerce_stripe_admin.wc_stripe_oauth_init ) {
 				var oauth_init_text = $( '<p>' + woocommerce_stripe_admin.i18n.wc_stripe_oauth_text + '</p>' );
 
-				$( '#woocommerce_stripe_enabled' ).parents( 'table' ).eq( 0 ).prepend( oauth_init_text );
+				$( '#woocommerce_stripe_enabled' ).parents( 'table' ).eq( 0 ).before( oauth_init_text );
 				
 				$( '#oauth-init' ).on( 'click', function( e ) {
 					e.preventDefault();
