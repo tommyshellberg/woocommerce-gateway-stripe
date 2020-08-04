@@ -17,15 +17,16 @@ jQuery( function( $ ) {
 			}
 		},
 
-		connectOauth: function() {
-			var data     = { nonce: woocommerce_stripe_admin.wc_stripe_connect_nonce };
-			var response = $.ajax( {
+		oauthInit: function() {
+			$.ajax( {
+				data:    { nonce: woocommerce_stripe_admin.wc_stripe_oauth_nonce },
 				method:  'POST',
-				data:    data,
 				url:     woocommerce_stripe_admin.ajax_url,
 			} ).done( function( response ) {
-				if( response.success ) {
+				if ( response.success ) {
 					window.location.href = response.data;
+				} else {
+					$( '#mainform h2' ).prepend( '<div class="notice notice-error"><p>' + response.data + '</p></div>' );
 				}
 			} );
 		},
@@ -101,17 +102,16 @@ jQuery( function( $ ) {
 			} );
 
 			// Add Stripe Connect oauth link if not connected.
-			if ( woocommerce_stripe_admin.wc_stripe_connect_oauth ) {
+			if ( woocommerce_stripe_admin.wc_stripe_oauth_init ) {
+				var oauth_init_text = $( '<p>' + woocommerce_stripe_admin.i18n.wc_stripe_oauth_text + '</p>' );
 
-				var oauth_init_link = $( '<a>' + woocommerce_stripe_admin.i18n.wc_stripe_connect_text + '</a>' ).on( 'click', function( e ) {
+				$( '#woocommerce_stripe_enabled' ).parents( 'table' ).eq( 0 ).prepend( oauth_init_text );
+				
+				$( '#oauth-init' ).on( 'click', function( e ) {
 					e.preventDefault();
-
-					wc_stripe_admin.connectOauth();
+					wc_stripe_admin.oauthInit();
 				} );
 
-				var description = $( '<p class="description"></p>' ).append( oauth_init_link );
-
-				$( '#woocommerce_stripe_enabled' ).parents( 'label' ).eq( 0 ).append( description );
 			}
 		}
 	};
