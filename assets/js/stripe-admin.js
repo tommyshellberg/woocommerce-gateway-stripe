@@ -17,9 +17,9 @@ jQuery( function( $ ) {
 			}
 		},
 
-		oauthInit: function() {
+		connect: function() {
 			$.ajax( {
-				data:    { nonce: woocommerce_stripe_admin.wc_stripe_oauth_nonce },
+				data:    { nonce: woocommerce_stripe_admin.wc_stripe_admin_nonce },
 				method:  'POST',
 				url:     woocommerce_stripe_admin.ajax_url,
 			} ).done( function( response ) {
@@ -101,18 +101,15 @@ jQuery( function( $ ) {
 				} );
 			} );
 
-			// Add Stripe Connect oauth link if not connected.
-			if ( woocommerce_stripe_admin.wc_stripe_oauth_init ) {
-				var oauth_init_text = $( '<p>' + woocommerce_stripe_admin.i18n.wc_stripe_oauth_text + '</p>' );
+			// Add Stripe Connect oauth button if not connected.
+			var api_credential_text = $( '<p>' + woocommerce_stripe_admin.wc_stripe_api_button_text + '</p>' );
 
-				$( '#woocommerce_stripe_enabled' ).parents( 'table' ).eq( 0 ).before( oauth_init_text );
-				
-				$( '#oauth-init' ).on( 'click', function( e ) {
-					e.preventDefault();
-					wc_stripe_admin.oauthInit();
-				} );
-
-			}
+			$( '#woocommerce_stripe_api_credentials' ).after( api_credential_text );
+			
+			$( '#woocommerce_stripe_api_credentials' ).siblings( 'p' ).find( '.button' ).on( 'click', function( e ) {
+				e.preventDefault();
+				wc_stripe_admin.connect();
+			} );
 		}
 	};
 
