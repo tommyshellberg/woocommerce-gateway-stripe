@@ -126,9 +126,5 @@ If you get stuck, you can ask for help in the Plugin Forum.
 
 == Changelog ==
 
-= 4.5.1 - 2020-08-12 =
-* Add - Support for Bulgaria, Czech Republic, Greece, Cyprus, Malta, Slovenia
-* Add - Additional metadata for order status change events when tracking is permitted
-
 [See changelog for all versions](https://raw.githubusercontent.com/woocommerce/woocommerce-gateway-stripe/master/changelog.txt).
 
